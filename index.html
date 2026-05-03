@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laporan OOP Dart (Struktur: Judul, Penjelasan, Code, Tombol)</title>
+
+<style>
+/* ===== POPUP IMAGE ===== */
+.image-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.image-modal-content {
+    display: block;
+    margin: 5% auto;
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 10px;
+}
+
+.close-image {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+/* ===== UI PERTAHAN (SESUAI ASLI) ===== */
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#ffe6f2;
+    color:#4a0d33;
+}
+
+header{
+    background:#ffb3d9;
+    padding:20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+}
+
+header p{
+    margin:5px 0 0 0;
+    font-weight:bold;
+}
+
+.container{
+    width:90%;
+    max-width:1000px;
+    margin:20px auto;
+    background:white;
+    padding:25px;
+    border-radius:8px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.1);
+}
+
+h2{
+    color:#cc0066;
+    margin-top:40px;
+}
+
+/* iframe wrapper */
+.iframe-wrapper {
+    margin-top: 15px;
+}
+
+iframe{
+    width:100%;
+    height:400px;
+    border:1px solid #ff99cc;
+    border-radius:6px;
+}
+
+/* tombol popup */
+.btn-popup {
+    background-color: #cc0066;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(204, 0, 102, 0.3);
+    transition: background-color 0.2s;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0 5px 0;
+    position: relative;
+    z-index: 10;
+}
+.btn-popup:hover {
+    background-color: #a30552;
+}
+.btn-popup:active {
+    transform: scale(0.97);
+}
+
+/* kontainer per topik - mengikuti struktur baru: judul, penjelasan, code, tombol, iframe */
+.topik-section {
+    margin-bottom: 40px;
+    border-bottom: 1px dashed #ffb3d9;
+    padding-bottom: 25px;
+}
+
+.topik-judul {
+    color: #cc0066;
+    font-size: 1.5rem;
+    margin: 0 0 10px 0;
+    border-left: 6px solid #ff99cc;
+    padding-left: 15px;
+}
+
+.topik-penjelasan {
+    background: #fff0f7;
+    padding: 12px 18px;
+    border-radius: 12px;
+    margin: 10px 0 15px 0;
+    line-height: 1.6;
+}
+
+/* area kode Dart (pratinjau) - tampil seperti code snippet */
+.code-block {
+    background-color: #2d0a1f;  /* gelap biar kontras */
+    color: #ffe6f2;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    padding: 15px 20px;
+    border-radius: 14px;
+    border: 1px solid #ff99cc;
+    overflow-x: auto;
+    white-space: pre-wrap;       /* wrap kode panjang */
+    word-break: break-word;
+    margin: 15px 0 10px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    line-height: 1.5;
+}
+
+/* kondisi iframe tersembunyi */
+iframe.hidden-iframe {
+    display: none;
+}
+
+/* Style untuk Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    overflow: auto;
+}
+
+.modal-content {
+    position: relative;
+    margin: 5% auto;
+    width: 90%;
+    height: 85%;
+    max-width: 1200px;
+    background: white;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.modal-content iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+.close-btn {
+    position: absolute;
+    right: -10px;
+    top: -15px;
+    color: white;
+    background: #cc0066;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.close-btn:hover {
+    background: #a30552;
+}
+
+/* footer */
+footer{
+    text-align:center;
+    padding:15px;
+    background:#ffb3d9;
+    margin-top:40px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Generic Dasar</h1>
+    <p>Nama: Nabilah Cahya Suci</p>
+    <p>NIM: 251410018</p>
+    <p>Kelas: SI2A</p>
+</header>
+
+<div class="container">
+
+<h2>Pengantar Generic Dasar</h2>
+<p>
+Generic Dasar adalah konsep dalam pemrograman yang digunakan untuk membuat class atau fungsi yang dapat bekerja dengan berbagai tipe data tanpa harus menulis kode berulang. Dengan generic, tipe data dapat ditentukan saat program dijalankan, sehingga kode menjadi lebih fleksibel, efisien, dan mudah digunakan kembali.
+</p>
+
+<h2>Class Modifiers</h2>
+<p>
+Class Modifiers adalah kata kunci dalam pemrograman yang digunakan untuk mengatur bagaimana sebuah class dapat diakses, digunakan, serta diwariskan oleh class lain. Modifier ini membantu menentukan apakah sebuah class bisa dibuat objeknya, bisa diturunkan (inheritance), atau dibatasi penggunaannya. Dengan adanya class modifiers, struktur program menjadi lebih terkontrol, aman, dan mudah dikelola sesuai dengan konsep Object-Oriented Programming (OOP).
+</p>
+
+<h2>Pengantar Generic</h2>
+<p>
+Pengantar Generic adalah penjelasan awal mengenai konsep generic dalam pemrograman, yaitu teknik untuk membuat class atau fungsi yang dapat digunakan dengan berbagai tipe data. Generic memungkinkan penulisan kode yang lebih fleksibel dan tidak perlu membuat banyak versi untuk tipe data yang berbeda, sehingga program menjadi lebih efisien dan mudah dikelola.
+</p>
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹Masalah Tanpa Generic </h3>
+    <div class="topik-penjelasan">
+    Masalah Tanpa Generic adalah kondisi ketika program harus membuat banyak class atau fungsi yang sama hanya untuk menangani tipe data yang berbeda. Hal ini menyebabkan kode menjadi berulang, sulit dikelola, dan kurang efisien. Selain itu, tanpa generic, risiko kesalahan tipe data (type error) juga lebih tinggi karena tidak ada pembatasan tipe yang jelas.
+    </div>
+    <!-- CODE DART (pratinjau) -->
+    <div class="code-block">
+// Nama : Nabilah cahya suci
+// NIM  : 251410018
+// Kelas : SI2A
+
+class Box {
+  dynamic data;
+
+  Box(this.data);
+}
+
+void main() {
+  var box = Box(42);
+  int value = box.data; // bisa error saat runtime
+}
+   </div>
+    <button class="btn-popup" onclick="openImage('keuntungan sealed calss.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<!-- ===== TOPIK 2 : OBJECT INSTANTIATION ===== -->
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 Solusi dengan Generic</h3>
+    <div class="topik-penjelasan">
+    Solusi dengan Generic adalah menggunakan konsep generic untuk membuat class atau fungsi yang dapat menangani berbagai tipe data dalam satu kode yang sama. Dengan generic, penulisan kode menjadi lebih ringkas, tidak berulang, dan lebih mudah dikelola. Selain itu, generic juga meningkatkan keamanan tipe data (type safety) karena tipe ditentukan secara jelas, sehingga mengurangi kesalahan dalam program.
+    </div>
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A
+
+mixin CanFly {
+  bool _isFlying = false;
+
+  bool get isFlying => _isFlying;
+
+  void fly() {
+    if (!_isFlying) {
+      _isFlying = true;
+      print('Started flying!');
+    } else {
+      print('Already flying!');
+    }
+  }
+
+  void land() {
+    if (_isFlying) {
+      _isFlying = false;
+      print('Landed!');
+    } else {
+      print('Already on the ground!');
+    }
+  }
+}
+
+mixin CanSwim {
+  bool _isSwimming = false;
+
+  bool get isSwimming => _isSwimming;
+
+  void swim() {
+    if (!_isSwimming) {
+      _isSwimming = true;
+      print('Started swimming!');
+    } else {
+      print('Already swimming!');
+    }
+  }
+
+  void stopSwim() {
+    if (_isSwimming) {
+      _isSwimming = false;
+      print('Stop swimming!');
+    } else {
+      print('Already stopped!');
+    }
+  }
+}
+
+class Bird with CanFly {}
+
+class Duck extends Bird with CanSwim {}
+
+class Fish with CanSwim {}
+
+class Airplane with CanFly {}
+
+void main() {
+  Bird bird = Bird();
+  bird.fly();
+  bird.land();
+
+  print('----------------');
+
+  Duck duck = Duck();
+  duck.fly();
+  duck.swim();
+  duck.stopSwim();
+
+  print('----------------');
+
+  Fish fish = Fish();
+  fish.swim();
+  fish.stopSwim();
+
+  print('----------------');
+
+  Airplane airplane = Airplane();
+  airplane.fly();
+  airplane.land();
+}
+    </div>
+    <button class="btn-popup" onclick="openDartPad('b0269f5cd7e2b04109761c6bad08b1bb')">▶ Jalankan Kode di DartPad</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹  Sintaks Generic Dasar</h3>
+    <div class="topik-penjelasan">
+    Sintaks Generic Dasar** adalah cara penulisan generic dalam pemrograman dengan menggunakan tanda kurung sudut (`< >`) untuk mendefinisikan tipe data yang bersifat fleksibel. Biasanya digunakan simbol seperti `T` sebagai penanda tipe. Dengan sintaks ini, sebuah class atau fungsi dapat digunakan untuk berbagai jenis data tanpa perlu menulis ulang kode, sehingga membuat program lebih efisien, fleksibel, dan mudah dikelola.
+    </div>
+
+<!-- ===== TOPIK 3 : CONSTRUCTORS ===== -->
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 contoh Sintaks Generic pada class dan function</h3>
+    <div class="topik-penjelasan">
+    Generic pada class memungkinkan satu class digunakan untuk berbagai tipe data, sedangkan generic pada function memungkinkan satu fungsi menerima berbagai tipe data, sehingga kode lebih fleksibel dan tidak berulang.
+    </div>
+    <div class="code-block">
+// Nama : Nabilah cahya suci
+// NIM  : 251410018
+// Kelas : SI2A
+
+class MyClass<T> {
+  T data;
+
+  MyClass(this.data);
+
+  T getData() {
+    return data;
+  }
+}
+
+T myFunc<T>(T value) {
+  return value;
+}
+
+void main() {
+  var myInt = MyClass<int>(10);
+  var myString = MyClass<String>('Test');
+
+  print(myInt.getData());
+  print(myString.getData());
+
+  print(myFunc<int>(100));
+  print(myFunc<String>('Hello'));
+}
+     </div>
+    <button class="btn-popup" onclick="openDartPad('b82d53ea54277454ff99a77b73b2a703')">▶ Jalankan Kode di DartPad</button>
+</div>
+
+<!-- ===== TOPIK 4 : MAHASISWA (PRACTICE) ===== -->
+<div class="topik-section">
+    <h3 class="topik-judul">🔹  contoh Kelas Box</T></h3>
+    <div class="topik-penjelasan">
+    Box<T> adalah class generic yang dapat menyimpan berbagai tipe data (seperti int atau String) menggunakan satu struktur yang sama, sehingga lebih fleksibel dan tidak perlu membuat banyak class.
+    </div>
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A
+
+void handleResponse(ApiResponse response) {
+  switch (response) {
+    case Success():
+      print("Success: ${(response as Success).message}");
+      break;
+    case Error():
+      print("Error: ${(response as Error).errorMessage}");
+      break;
+  }
+}
+void main() {
+  handleResponse(Success("Data berhasil"));
+  handleResponse(Error("Terjadi kesalahan"));
+}
+sealed class ApiResponse {}
+class Success extends ApiResponse {
+  final String message;
+  Success(this.message);
+}
+class Error extends ApiResponse {
+  final String errorMessage;
+  Error(this.errorMessage);
+}
+    </div>
+    <button class="btn-popup" onclick="openImage('keuntungan sealed calss.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+<!-- ===== TOPIK 5 : ENCAPSULATION ===== -->
+<div class="topik-section">
+    <h3 class="topik-judul">🔹  Multiple Type Parameters</h3>
+    <div class="topik-penjelasan">
+    Multiple Type Parameters adalah penggunaan lebih dari satu tipe data dalam generic dengan menuliskan beberapa parameter di dalam tanda `< >`, misalnya `<T, U>`.Dengan cara ini, sebuah class atau function dapat menangani beberapa tipe data sekaligus, sehingga lebih fleksibel dan efisien tanpa perlu membuat banyak kode terpisah.
+    </div>
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A
+
+base class Animal {
+  void speak() {
+    print("Hewan bersuara...");
+  }
+}
+base class Dog extends Animal {
+  @override
+  void speak() {
+    print("woof woff!");
+  }
+}
+void main() {
+  Animal myDog = Dog();
+  myDog.speak();
+}
+    </div>
+    <button class="btn-popup" onclick="openImage('base class.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 menggabungkan dua nilai dengan tipe data yang berbeda.</h3>
+    <div class="topik-penjelasan">
+    Menggabungkan dua nilai dengan tipe data yang berbeda dapat dilakukan menggunakan generic dengan multiple type parameters, misalnya `<T, U>`.
+    Dengan cara ini, dua nilai yang memiliki tipe berbeda dapat disimpan atau diproses dalam satu class atau function tanpa harus membuat kode terpisah. Generic akan menjaga tipe data tetap jelas dan aman, sehingga program menjadi lebih fleksibel dan tidak berulang.
+    </div>
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A
+
+base class Animal {
+  void speak() {
+    print("Hewan bersuara...");
+  }
+}
+base class Dog extends Animal {
+  @override
+  void speak() {
+    print("Woof!");
+  }
+}
+void main() {
+  Animal animal = Dog();
+  animal.speak();
+}
+    </div>
+    <button class="btn-popup" onclick="openImage('kapan menggunakan base class.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 Generic dengan extends</h3>
+    <div class="topik-penjelasan">
+    Generic dengan extends adalah penggunaan generic yang diberi batasan tipe data (constraint), sehingga tipe yang digunakan harus merupakan turunan dari tipe tertentu.
+    Dengan extends, kita bisa memastikan bahwa generic hanya menerima tipe data yang memiliki sifat atau method tertentu, sehingga lebih aman dan terkontrol.
+    </div>
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A
+
+final class Settings {
+  final String theme;
+  final int fontSize;
+  Settings({required this.theme, required this.fontSize});
+  void showSettings() {
+    print("Theme: $theme, Font Size: $fontSize");
+  }
+}
+class CustomSettings {
+  final Settings settings;
+  CustomSettings(String theme, int fontSize)
+      : settings = Settings(theme: theme, fontSize: fontSize);
+  void showSettings() {
+    settings.showSettings();
+  }
+}
+void main() {
+  Settings settings = Settings(theme: "Dark", fontSize: 14);
+  settings.showSettings();
+  CustomSettings custom = CustomSettings("Dark", 14);
+  custom.showSettings();
+}
+    </div>
+    <button class="btn-popup" onclick="openImage('final class.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<!-- ===== TOPIK 6 : THIS KEYWORD ===== -->
+<div class="topik-section">
+    <h3 class="topik-judul">🔹Type Inference (Inferensi Tipe)</h3>
+    <div class="topik-penjelasan">
+    Type Inference (Inferensi Tipe) adalah kemampuan bahasa pemrograman untuk menentukan tipe data secara otomatis tanpa harus dituliskan secara eksplisit oleh programmer.
+    Dengan fitur ini, kita tidak perlu selalu menuliskan tipe data karena sistem sudah bisa mengenalinya dari nilai yang diberikan. Hal ini membuat kode lebih ringkas, mudah dibaca, dan tetap aman digunakan.
+    </div>
+    <div class="code-block">
+// Nama : Nabilah Cahya Suci 
+// NIM     : 251410018
+// Kelas   : SI2A
+
+sealed class Status {
+  const Status();
+}
+
+class Loading extends Status {
+  const Loading();
+}
+
+class Loaded extends Status {
+  final String data;
+  const Loaded(this.data);
+}
+
+class Failed extends Status {
+  final String error;
+  const Failed(this.error);
+}
+
+void handleStatus(Status status) {
+  switch (status) {
+    case Loading():
+      print('Loading...');
+    case Loaded(:final data):
+      print('Data: $data');
+    case Failed(:final error):
+      print('Error: $error');
+  }
+}
+
+void main() {
+  handleStatus(const Loading());
+  handleStatus(const Loaded("Data berhasil"));
+  handleStatus(const Failed("Gagal"));
+}
+    </div>
+    <button class="btn-popup" onclick="openDartPad('e806ed8020b9065b28f2d8069aafa203')">▶ Jalankan Kode di DartPad</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 Pembatasan Tipe dan manfaatnya</h3>
+    <div class="topik-penjelasan">
+    Pembatasan tipe adalah aturan dalam penggunaan generic yang membatasi jenis tipe data yang boleh digunakan, biasanya dengan kata kunci seperti `extends`. Dengan adanya pembatasan ini, keamanan tipe data (type safety) lebih terjaga, kesalahan dalam program dapat dikurangi, serta memastikan bahwa tipe data yang digunakan memiliki fungsi atau sifat tertentu. Hal ini juga membuat kode menjadi lebih terkontrol dan mudah dikelola.
+    </div>
+
+
+<!-- ===== TOPIK 7 : PRODUCT CLASS (KODE AWAL DARI SOAL) ===== -->
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 Pembatasan Tipe pada Interface dan Class</h3>
+    <div class="topik-penjelasan">
+    Pembatasan tipe pada interface dan class adalah penggunaan generic dengan batasan tertentu (seperti `extends`) yang diterapkan pada interface atau class agar hanya tipe data tertentu yang dapat digunakan. Dengan pembatasan ini, interface dan class menjadi lebih aman karena hanya menerima tipe yang sesuai, memastikan adanya method atau sifat tertentu, serta membuat kode lebih terstruktur, terkontrol, dan mudah dikelola.
+    </div>
+    <!-- CODE DART persis seperti di soal: class Product dan main -->
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A
+
+sealed class AppState {}
+
+class LoadingState extends AppState {}
+
+class SuccessState extends AppState {
+  final List<String> items;
+  SuccessState(this.items);
+}
+
+class ErrorState extends AppState {
+  final String message;
+  ErrorState(this.message);
+}
+
+void showLoading() {
+  print('Loading...');
+}
+
+void showItems(List<String> items) {
+  print('Success! Items:');
+  for (int i = 0; i < items.length; i++) {
+    print('${i + 1}. ${items[i]}');
+  }
+}
+
+void showError(String message) {
+  print('Error: $message');
+}
+
+void updateUI(AppState state) {
+  switch (state) {
+    case LoadingState():
+      showLoading();
+    case SuccessState(:final items):
+      showItems(items);
+    case ErrorState(:final message):
+      showError(message);
+  }
+}
+
+void main() {
+  updateUI(LoadingState());
+  updateUI(SuccessState(["Item 1", "Item 2"]));
+  updateUI(ErrorState("Terjadi error"));
+}
+    </div>
+    <button class="btn-popup" onclick="openDartPad('3af8b506c7189190b2584051b91b339d')">▶ Jalankan Kode di DartPad</button>
+</div>
+
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 Pembatasan Tipe dengan Class Abstract</h3>
+    <div class="topik-penjelasan">
+    Pembatasan tipe dengan class abstract adalah penggunaan generic dengan batasan `extends` yang mengharuskan tipe data merupakan turunan dari class abstract tertentu. Hal ini memastikan tipe memiliki method atau sifat yang sudah ditentukan, sehingga kode lebih aman, terstruktur, dan tetap fleksibel.
+    </div>
+    <!-- CODE DART (pratinjau) -->
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A 
+
+base class BarangRepository {
+  void create(String barang) {
+    print("Tambah barang: $barang");
+  }
+
+  void read() {
+    print("Menampilkan semua barang...");
+  }
+
+  void update(int id, String barang) {
+    print("Barang ke-$id diubah jadi $barang");
+  }
+
+  void delete(int id) {
+    print("Barang ke-$id dihapus");
+  }
+}
+
+// subclass beda dari temen
+base class Gudang extends BarangRepository {
+  @override
+  void read() {
+    print("Daftar barang di gudang:");
+  }
+}
+
+void main() {
+  print("=== SISTEM GUDANG ===");
+
+  Gudang gudang = Gudang();
+
+  gudang.create("Sepatu");
+  gudang.read();
+  gudang.update(1, "Sepatu Baru");
+  gudang.delete(1);
+}
+    </div>
+    <button class="btn-popup" onclick="openImage('bonus1.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 Praktik 1 – Generic Class & Fungsi</h3>
+    <div class="topik-penjelasan">
+    Praktik 1 – Generic Class & Fungsi adalah latihan untuk memahami penggunaan generic pada class dan function agar dapat menangani berbagai tipe data, sehingga kode lebih fleksibel, tidak berulang, dan tetap aman.
+    </div>
+
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A
+
+final class Hitung {
+  static int tambah(int a, int b) => a + b;
+  static int kurang(int a, int b) => a - b;
+  static int kali(int a, int b) => a * b;
+  static double bagi(double a, double b) => a / b;
+}
+
+void main() {
+  print("=== PROGRAM HITUNG ===");
+
+  print("Penjumlahan : ${Hitung.tambah(15, 5)}");
+  print("Pengurangan : ${Hitung.kurang(15, 5)}");
+  print("Perkalian   : ${Hitung.kali(15, 5)}");
+  print("Pembagian   : ${Hitung.bagi(15, 5)}");
+}
+    </div>
+    <button class="btn-popup" onclick="openImage('bonus2.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 Generic vs Dynamic vs Object</h3>
+    <div class="topik-penjelasan">
+    Generic, dynamic, dan object merupakan tiga cara dalam menangani tipe data dalam pemrograman. Generic bersifat fleksibel namun tetap aman karena tipe data ditentukan dengan jelas saat digunakan (type-safe). Dynamic memberikan kebebasan tanpa tipe tetap, tetapi berisiko menimbulkan error saat program dijalankan. Sementara itu, object dapat menampung semua jenis data, namun penggunaannya kurang praktis karena memerlukan casting untuk mengakses nilai secara spesifik.
+    </div>
+
+    <div class="topik-section">
+    <h3 class="topik-judul">🔹  Studi Kasus – Cache Generic</h3>
+    <div class="topik-penjelasan">
+    Studi Kasus – Cache Generic adalah penggunaan generic untuk membuat cache yang dapat menyimpan berbagai tipe data dalam satu struktur. Dengan cara ini, kode menjadi lebih fleksibel, efisien, dan tetap aman karena tipe data tetap terkontrol.
+    </div>
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A
+
+final class Settings {
+  final String theme;
+  final int fontSize;
+  Settings({required this.theme, required this.fontSize});
+  void showSettings() {
+    print("Theme: $theme, Font Size: $fontSize");
+  }
+}
+class CustomSettings {
+  final Settings settings;
+  CustomSettings(String theme, int fontSize)
+      : settings = Settings(theme: theme, fontSize: fontSize);
+  void showSettings() {
+    settings.showSettings();
+  }
+}
+void main() {
+  Settings settings = Settings(theme: "Dark", fontSize: 14);
+  settings.showSettings();
+  CustomSettings custom = CustomSettings("Dark", 14);
+  custom.showSettings();
+}
+    </div>
+    <button class="btn-popup" onclick="openImage('final class.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 Ringkasan</h3>
+    <div class="topik-penjelasan">
+    Generic adalah konsep untuk membuat class atau function yang dapat digunakan dengan berbagai tipe data sehingga kode lebih fleksibel dan tidak berulang. Generic ditulis dengan `< >`, bisa menggunakan lebih dari satu tipe, serta dapat dibatasi dengan `extends` agar lebih aman. Selain itu, type inference membantu menentukan tipe data secara otomatis.
+    Sementara itu, class modifiers digunakan untuk mengatur akses dan pewarisan class agar kode lebih terstruktur, aman, dan mudah dikelola.
+    </div>
+
+    <div class="topik-section">
+    <h3 class="topik-judul">🔹  Latihan</h3>
+    <div class="topik-penjelasan">
+    Latihan ini bertujuan memahami penggunaan generic agar kode lebih fleksibel. `Stack<T>` digunakan untuk struktur data LIFO dengan operasi push, pop, dan peek. `mergeLists<T>` berfungsi menggabungkan dua list dengan tipe yang sama. `Response<T>` digunakan untuk menyimpan data dan error secara fleksibel. Sedangkan repository generic adalah sistem pengelolaan data yang dapat digunakan kembali untuk berbagai tipe tanpa menulis ulang kode.
+    </div>
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A
+
+final class Settings {
+  final String theme;
+  final int fontSize;
+  Settings({required this.theme, required this.fontSize});
+  void showSettings() {
+    print("Theme: $theme, Font Size: $fontSize");
+  }
+}
+class CustomSettings {
+  final Settings settings;
+  CustomSettings(String theme, int fontSize)
+      : settings = Settings(theme: theme, fontSize: fontSize);
+  void showSettings() {
+    settings.showSettings();
+  }
+}
+void main() {
+  Settings settings = Settings(theme: "Dark", fontSize: 14);
+  settings.showSettings();
+  CustomSettings custom = CustomSettings("Dark", 14);
+  custom.showSettings();
+}
+    </div>
+    <button class="btn-popup" onclick="openImage('final class.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹 Challenge</h3>
+    <div class="topik-penjelasan">
+    Challenge Sistem Repository Generic adalah pembuatan sistem pengelolaan data menggunakan generic agar bisa digunakan untuk berbagai tipe data. Repository ini memiliki fungsi dasar seperti tambah, ambil, ubah, dan hapus data tanpa perlu membuat kode ulang untuk setiap tipe. Dengan generic, sistem menjadi lebih fleksibel, reusable, dan mudah dikelola.
+    </div>
+
+    <div class="code-block">
+// Nama  : Nabilah Cahya Suci 
+// NIM   : 251410018
+// Kelas : SI2A
+
+final class Hitung {
+  static int tambah(int a, int b) => a + b;
+  static int kurang(int a, int b) => a - b;
+  static int kali(int a, int b) => a * b;
+  static double bagi(double a, double b) => a / b;
+}
+
+void main() {
+  print("=== PROGRAM HITUNG ===");
+
+  print("Penjumlahan : ${Hitung.tambah(15, 5)}");
+  print("Pengurangan : ${Hitung.kurang(15, 5)}");
+  print("Perkalian   : ${Hitung.kali(15, 5)}");
+  print("Pembagian   : ${Hitung.bagi(15, 5)}");
+}
+    </div>
+    <button class="btn-popup" onclick="openImage('bonus2.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<!-- MODAL UNTUK DARTPAD -->
+<div id="dartpadModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeDartPad()">&times;</span>
+        <iframe id="dartpadIframe" src="" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+    </div>
+</div>
+
+<script>
+    // SECURITY PROTOCOL: ANTI-VANDALISM & ANTI-VIEWSOURCE
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.onkeydown = function (e) {
+      if (e.keyCode == 123) return false; // F12
+      if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false; // Ctrl+Shift+I/J/C
+      if (e.ctrlKey && e.keyCode == 85) return false; // Ctrl+U
+      if (e.ctrlKey && e.keyCode == 83) return false; // Ctrl+S
+    };
+    
+    // Fungsi untuk membuka DartPad di modal
+    function openDartPad(id) {
+        const modal = document.getElementById('dartpadModal');
+        const iframe = document.getElementById('dartpadIframe');
+        
+        // Set src iframe dengan ID yang benar
+        iframe.src = 'https://dartpad.dev/embed-inline.html?id=' + id + '&theme=dark&run=true';
+        
+        // Tampilkan modal
+        modal.style.display = 'block';
+        
+        // Cegah scroll di background
+        document.body.style.overflow = 'hidden';
+    }
+    // Fungsi buka gambar
+function openImage(src) {
+    const modal = document.getElementById("imageModal");
+    const img = document.getElementById("popupImage");
+
+    img.src = src;
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
+}
+
+// Fungsi tutup gambar
+function closeImage() {
+    const modal = document.getElementById("imageModal");
+
+    modal.style.display = "none";
+    document.body.style.overflow = "auto";
+}
+
+    // Fungsi untuk menutup modal
+    function closeDartPad() {
+        const modal = document.getElementById('dartpadModal');
+        const iframe = document.getElementById('dartpadIframe');
+        
+        // Sembunyikan modal
+        modal.style.display = 'none';
+        
+        // Hentikan iframe dengan mengosongkan src
+        iframe.src = '';
+        
+        // Kembalikan scroll
+        document.body.style.overflow = 'auto';
+    }
+
+    // Tutup modal jika klik di luar konten modal
+    window.onclick = function(event) {
+    const dartModal = document.getElementById('dartpadModal');
+    const imageModal = document.getElementById('imageModal');
+
+    if (event.target == dartModal) {
+        closeDartPad();
+    }
+    if (event.target == imageModal) {
+        closeImage();
+    }
+}
+</script>
+<!-- MODAL IMAGE -->
+<div id="imageModal" class="image-modal">
+    <span class="close-image" onclick="closeImage()">&times;</span>
+    <img class="image-modal-content" id="popupImage">
+</div>
+</body>
+</html>
