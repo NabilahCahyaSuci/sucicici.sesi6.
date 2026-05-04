@@ -230,25 +230,20 @@ footer{
 
 <div class="container">
 
-<h2>Pengantar Generic Dasar</h2>
-<p>
-Generic Dasar adalah konsep dalam pemrograman yang digunakan untuk membuat class atau fungsi yang dapat bekerja dengan berbagai tipe data tanpa harus menulis kode berulang. Dengan generic, tipe data dapat ditentukan saat program dijalankan, sehingga kode menjadi lebih fleksibel, efisien, dan mudah digunakan kembali.
-</p>
-
-<h2>Class Modifiers</h2>
-<p>
-Class Modifiers adalah kata kunci dalam pemrograman yang digunakan untuk mengatur bagaimana sebuah class dapat diakses, digunakan, serta diwariskan oleh class lain. Modifier ini membantu menentukan apakah sebuah class bisa dibuat objeknya, bisa diturunkan (inheritance), atau dibatasi penggunaannya. Dengan adanya class modifiers, struktur program menjadi lebih terkontrol, aman, dan mudah dikelola sesuai dengan konsep Object-Oriented Programming (OOP).
-</p>
-
 <h2>Pengantar Generic</h2>
 <p>
-Pengantar Generic adalah penjelasan awal mengenai konsep generic dalam pemrograman, yaitu teknik untuk membuat class atau fungsi yang dapat digunakan dengan berbagai tipe data. Generic memungkinkan penulisan kode yang lebih fleksibel dan tidak perlu membuat banyak versi untuk tipe data yang berbeda, sehingga program menjadi lebih efisien dan mudah dikelola.
+Generic adalah fitur dalam pemrograman yang memungkinkan class atau fungsi digunakan untuk berbagai tipe data dengan satu kode yang sama, sehingga lebih fleksibel dan efisien.
 </p>
 
 <div class="topik-section">
     <h3 class="topik-judul">🔹Masalah Tanpa Generic </h3>
     <div class="topik-penjelasan">
-    Masalah Tanpa Generic adalah kondisi ketika program harus membuat banyak class atau fungsi yang sama hanya untuk menangani tipe data yang berbeda. Hal ini menyebabkan kode menjadi berulang, sulit dikelola, dan kurang efisien. Selain itu, tanpa generic, risiko kesalahan tipe data (type error) juga lebih tinggi karena tidak ada pembatasan tipe yang jelas.
+    Tanpa generic, kode harus dibuat berulang untuk tiap tipe data sehingga terjadi duplikasi dan tidak efisien. Selain itu, penggunaan dynamic membuat tipe data tidak aman karena error baru muncul saat runtime. Hal ini menyebabkan kode lebih sulit dikelola dan rentan kesalahan. 
+    </div>
+    <div class="topik-section">
+    <h3 class="topik-judul">✅ Analisis keberhasilan</h3>
+    <div class="topik-penjelasan">
+    Kode berhasil berjalan jika tipe data sesuai atau menggunakan casting (as), sehingga nilai dapat digunakan tanpa error.
     </div>
     <!-- CODE DART (pratinjau) -->
     <div class="code-block">
@@ -264,13 +259,43 @@ class Box {
 
 void main() {
   var box = Box(42);
-  int value = box.data; // bisa error saat runtime
+  int value = box.data as int; // casting agar aman
+  print(value);
 }
    </div>
-    <button class="btn-popup" onclick="openImage('keuntungan sealed calss.jpeg')">
+    <button class="btn-popup" onclick="openImage('Masalah tanpa generic.jpeg')">
 ▶ Lihat Capture
 </button>
 </div>
+
+<div class="topik-section">
+    <h3 class="topik-judul"> ❌ Analisis kegagalan</h3>
+    <div class="topik-penjelasan">
+    Error terjadi karena nilai `"Halo"` (String) dimasukkan ke variabel `int`, sehingga tipe data tidak cocok dan program gagal dijalankan.
+    </div>
+    <!-- CODE DART (pratinjau) -->
+    <div class="code-block">
+// Nama : Nabilah cahya suci
+// NIM  : 251410018
+// Kelas: SI2A
+
+class Box {
+  dynamic data;
+
+  Box(this.data);
+}
+
+void main() {
+  var box = Box("Halo");
+  int value = box.data; // ERROR saat runtime
+  print(value);
+}
+   </div>
+    <button class="btn-popup" onclick="openImage('Masalah tanpa generic erro.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
 
 <!-- ===== TOPIK 2 : OBJECT INSTANTIATION ===== -->
 <div class="topik-section">
@@ -278,106 +303,87 @@ void main() {
     <div class="topik-penjelasan">
     Solusi dengan Generic adalah menggunakan konsep generic untuk membuat class atau fungsi yang dapat menangani berbagai tipe data dalam satu kode yang sama. Dengan generic, penulisan kode menjadi lebih ringkas, tidak berulang, dan lebih mudah dikelola. Selain itu, generic juga meningkatkan keamanan tipe data (type safety) karena tipe ditentukan secara jelas, sehingga mengurangi kesalahan dalam program.
     </div>
+    <div class="topik-section">
+    <h3 class="topik-judul">✅ Analisis keberhasilan</h3>
+    <div class="topik-penjelasan">
+    Kode berhasil berjalan karena sudah menggunakan generic (<T>), sehingga tipe data jadi jelas dan aman.
+    </div>
+    <!-- CODE DART (pratinjau) -->
     <div class="code-block">
-// Nama  : Nabilah Cahya Suci 
-// NIM   : 251410018
-// Kelas : SI2A
+// Nama : Nabilah cahya suci
+// NIM  : 251410018
+// Kelas: SI2A
 
-mixin CanFly {
-  bool _isFlying = false;
+class Box<T> {
+  T data;
 
-  bool get isFlying => _isFlying;
-
-  void fly() {
-    if (!_isFlying) {
-      _isFlying = true;
-      print('Started flying!');
-    } else {
-      print('Already flying!');
-    }
-  }
-
-  void land() {
-    if (_isFlying) {
-      _isFlying = false;
-      print('Landed!');
-    } else {
-      print('Already on the ground!');
-    }
-  }
+  Box(this.data);
 }
-
-mixin CanSwim {
-  bool _isSwimming = false;
-
-  bool get isSwimming => _isSwimming;
-
-  void swim() {
-    if (!_isSwimming) {
-      _isSwimming = true;
-      print('Started swimming!');
-    } else {
-      print('Already swimming!');
-    }
-  }
-
-  void stopSwim() {
-    if (_isSwimming) {
-      _isSwimming = false;
-      print('Stop swimming!');
-    } else {
-      print('Already stopped!');
-    }
-  }
-}
-
-class Bird with CanFly {}
-
-class Duck extends Bird with CanSwim {}
-
-class Fish with CanSwim {}
-
-class Airplane with CanFly {}
 
 void main() {
-  Bird bird = Bird();
-  bird.fly();
-  bird.land();
+  var intBox = Box<int>(42);
+  var stringBox = Box<String>('Hello');
 
-  print('----------------');
-
-  Duck duck = Duck();
-  duck.fly();
-  duck.swim();
-  duck.stopSwim();
-
-  print('----------------');
-
-  Fish fish = Fish();
-  fish.swim();
-  fish.stopSwim();
-
-  print('----------------');
-
-  Airplane airplane = Airplane();
-  airplane.fly();
-  airplane.land();
+  print(intBox.data);   // 42
+  print(stringBox.data); // Hello
 }
-    </div>
-    <button class="btn-popup" onclick="openDartPad('b0269f5cd7e2b04109761c6bad08b1bb')">▶ Jalankan Kode di DartPad</button>
+   </div>
+    <button class="btn-popup" onclick="openImage('Solusi dengan generic sukses.jpeg')">
+▶ Lihat Capture
+</button>
 </div>
 
 <div class="topik-section">
-    <h3 class="topik-judul">🔹  Sintaks Generic Dasar</h3>
+    <h3 class="topik-judul"> ❌ Analisis kegagalan</h3>
     <div class="topik-penjelasan">
-    Sintaks Generic Dasar** adalah cara penulisan generic dalam pemrograman dengan menggunakan tanda kurung sudut (`< >`) untuk mendefinisikan tipe data yang bersifat fleksibel. Biasanya digunakan simbol seperti `T` sebagai penanda tipe. Dengan sintaks ini, sebuah class atau fungsi dapat digunakan untuk berbagai jenis data tanpa perlu menulis ulang kode, sehingga membuat program lebih efisien, fleksibel, dan mudah dikelola.
+   Error terjadi karena `stringBox` bertipe `Box<String>`, tetapi diisi dengan nilai `123` (int), sehingga tipe data tidak sesuai.
+    </div>
+    <!-- CODE DART (pratinjau) -->
+    <div class="code-block">
+// Nama : Nabilah cahya suci
+// NIM  : 251410018
+// Kelas: SI2A
+
+class Box<T> {
+  T data;
+  Box(this.data);
+}
+
+void main() {
+  var intBox = Box<int>(42);
+  var stringBox = Box<String>('Hello');
+
+  int value = intBox.data;
+
+  stringBox.data = 123; // ERROR
+}
+   </div>
+    <button class="btn-popup" onclick="openImage('Solusi dengan generic erro.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul">🔹Masalah Tanpa Generic </h3>
+    <div class="topik-penjelasan">
+      Generic ditulis menggunakan tanda `< >` untuk menentukan tipe data pada class atau function. Dengan konsep ini, satu kode dapat digunakan untuk berbagai jenis data tanpa perlu membuat kode baru, sehingga lebih efisien dan mudah digunakan kembali.
+    <div class="card">
+<ul>
+<li>T = Type</li>
+<li>E = Element (collection)</li>
+<li>K = Key</li>
+<li>V = Value</li>
+<li>R = Return type</li>
+</ul>
+</p>
+</div>
     </div>
 
 <!-- ===== TOPIK 3 : CONSTRUCTORS ===== -->
 <div class="topik-section">
     <h3 class="topik-judul">🔹 contoh Sintaks Generic pada class dan function</h3>
     <div class="topik-penjelasan">
-    Generic pada class memungkinkan satu class digunakan untuk berbagai tipe data, sedangkan generic pada function memungkinkan satu fungsi menerima berbagai tipe data, sehingga kode lebih fleksibel dan tidak berulang.
+    Generic dapat digunakan pada class dan function dengan menambahkan tanda <T> sebagai parameter tipe data. T merupakan tipe data fleksibel yang akan diganti dengan tipe sebenarnya saat digunakan,Dengan menggunakan generic, satu kode dapat digunakan untuk berbagai tipe data tanpa perlu membuat ulang, sehingga lebih fleksibel dan efisien.
     </div>
     <div class="code-block">
 // Nama : Nabilah cahya suci
@@ -416,41 +422,38 @@ void main() {
 <div class="topik-section">
     <h3 class="topik-judul">🔹  contoh Kelas Box</T></h3>
     <div class="topik-penjelasan">
-    Box<T> adalah class generic yang dapat menyimpan berbagai tipe data (seperti int atau String) menggunakan satu struktur yang sama, sehingga lebih fleksibel dan tidak perlu membuat banyak class.
-    </div>
+   Kelas Box menggunakan generic <T> sebagai tipe data fleksibel. T akan diganti dengan tipe tertentu saat objek dibuat, seperti int atau String. Variabel data menyimpan nilai sesuai tipe tersebut,Dengan generic, satu class bisa digunakan untuk berbagai tipe data tanpa perlu membuat ulang, sehingga lebih efisien dan reusable.
     <div class="code-block">
 // Nama  : Nabilah Cahya Suci 
 // NIM   : 251410018
 // Kelas : SI2A
 
-void handleResponse(ApiResponse response) {
-  switch (response) {
-    case Success():
-      print("Success: ${(response as Success).message}");
-      break;
-    case Error():
-      print("Error: ${(response as Error).errorMessage}");
-      break;
+class Box<T> {
+  T? _value;
+
+  Box(this._value);
+
+  T? get value => _value;
+
+  void setValue(T value) {
+    _value = value;
   }
 }
+
 void main() {
-  handleResponse(Success("Data berhasil"));
-  handleResponse(Error("Terjadi kesalahan"));
-}
-sealed class ApiResponse {}
-class Success extends ApiResponse {
-  final String message;
-  Success(this.message);
-}
-class Error extends ApiResponse {
-  final String errorMessage;
-  Error(this.errorMessage);
+  var intBox = Box<int>(10);
+  print(intBox.value);
+
+  intBox.setValue(20);
+  print(intBox.value);
+
+  var stringBox = Box<String>('Hello');
+  print(stringBox.value);
 }
     </div>
-    <button class="btn-popup" onclick="openImage('keuntungan sealed calss.jpeg')">
-▶ Lihat Capture
-</button>
+    <button class="btn-popup" onclick="openDartPad('8e7c3d452f5ff44829f42cdbb08a31e4')">▶ Jalankan Kode di DartPad</button>
 </div>
+
 <!-- ===== TOPIK 5 : ENCAPSULATION ===== -->
 <div class="topik-section">
     <h3 class="topik-judul">🔹  Multiple Type Parameters</h3>
@@ -462,25 +465,26 @@ class Error extends ApiResponse {
 // NIM   : 251410018
 // Kelas : SI2A
 
-base class Animal {
-  void speak() {
-    print("Hewan bersuara...");
+class Pair<K, V> {
+  K key;
+  V value;
+
+  Pair(this.key, this.value);
+
+  void printPair() {
+    print('Key: $key, Value: $value');
   }
 }
-base class Dog extends Animal {
-  @override
-  void speak() {
-    print("woof woff!");
-  }
-}
+
 void main() {
-  Animal myDog = Dog();
-  myDog.speak();
+  var pair1 = Pair<String, int>('age', 30);
+  pair1.printPair();
+
+  var pair2 = Pair<String, String>('name', 'Alice');
+  pair2.printPair();
 }
     </div>
-    <button class="btn-popup" onclick="openImage('base class.jpeg')">
-▶ Lihat Capture
-</button>
+    <button class="btn-popup" onclick="openDartPad('e806ed8020b9065b28f2d8069aafa203')">▶ Jalankan Kode di DartPad</button>
 </div>
 
 <div class="topik-section">
@@ -494,26 +498,18 @@ void main() {
 // NIM   : 251410018
 // Kelas : SI2A
 
-base class Animal {
-  void speak() {
-    print("Hewan bersuara...");
-  }
+String combine<T, U>(T value1, U value2) {
+  return '$value1, $value2';
 }
-base class Dog extends Animal {
-  @override
-  void speak() {
-    print("Woof!");
-  }
-}
+
 void main() {
-  Animal animal = Dog();
-  animal.speak();
+  print(combine<String, int>('Number', 10));
+  print(combine<int, double>(10, 20.5));
 }
-    </div>
-    <button class="btn-popup" onclick="openImage('kapan menggunakan base class.jpeg')">
-▶ Lihat Capture
-</button>
+   </div>
+    <button class="btn-popup" onclick="openDartPad('55ea3cbc629772d0e55e6fe9b020335e')">▶ Jalankan Kode di DartPad</button>
 </div>
+    
 
 <div class="topik-section">
     <h3 class="topik-judul">🔹 Generic dengan extends</h3>
@@ -521,35 +517,64 @@ void main() {
     Generic dengan extends adalah penggunaan generic yang diberi batasan tipe data (constraint), sehingga tipe yang digunakan harus merupakan turunan dari tipe tertentu.
     Dengan extends, kita bisa memastikan bahwa generic hanya menerima tipe data yang memiliki sifat atau method tertentu, sehingga lebih aman dan terkontrol.
     </div>
+    <div class="topik-section">
+    <h3 class="topik-judul">✅ Analisis keberhasilan</h3>
+    <div class="topik-penjelasan">
+    Kode berhasil karena menggunakan generic dengan batasan tipe (T extends num), sehingga hanya tipe angka yang boleh digunakan.
+    </div>
+    <!-- CODE DART (pratinjau) -->
     <div class="code-block">
-// Nama  : Nabilah Cahya Suci 
-// NIM   : 251410018
+// Nama : Nabilah cahya suci
+// NIM  : 251410018
+// Kelas: SI2A
+
+class NumberBox<T extends num> {
+  T value;
+
+  NumberBox(this.value);
+
+  T getValue() {
+    return value;
+  }
+}
+
+void main() {
+  var intBox = NumberBox<int>(10);
+  var doubleBox = NumberBox<double>(3.14);
+
+  print(intBox.getValue());
+  print(doubleBox.getValue());
+}
+   </div>
+    <button class="btn-popup" onclick="openImage('Generic dengan extends sukses.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul">❌ Analisis kegagalan</h3>
+    <div class="topik-penjelasan">
+    Error muncul karena String tidak sesuai dengan batasan T extends num, sehingga tidak bisa digunakan pada NumberBox.
+    </div>
+    <!-- CODE DART (pratinjau) -->
+    <div class="code-block">
+// Nama : Nabilah cahya suci
+// NIM  : 251410018
 // Kelas : SI2A
 
-final class Settings {
-  final String theme;
-  final int fontSize;
-  Settings({required this.theme, required this.fontSize});
-  void showSettings() {
-    print("Theme: $theme, Font Size: $fontSize");
-  }
+class NumberBox<T extends num> {
+  T value;
+
+  NumberBox(this.value);
 }
-class CustomSettings {
-  final Settings settings;
-  CustomSettings(String theme, int fontSize)
-      : settings = Settings(theme: theme, fontSize: fontSize);
-  void showSettings() {
-    settings.showSettings();
-  }
-}
+
 void main() {
-  Settings settings = Settings(theme: "Dark", fontSize: 14);
-  settings.showSettings();
-  CustomSettings custom = CustomSettings("Dark", 14);
-  custom.showSettings();
+  var stringBox = NumberBox<String>("Hello"); // ❌ ERROR
+
+  print(stringBox.value);
 }
-    </div>
-    <button class="btn-popup" onclick="openImage('final class.jpeg')">
+   </div>
+    <button class="btn-popup" onclick="openImage('Generic dengan extends erro.jpeg')">
 ▶ Lihat Capture
 </button>
 </div>
@@ -566,49 +591,35 @@ void main() {
 // NIM     : 251410018
 // Kelas   : SI2A
 
-sealed class Status {
-  const Status();
-}
-
-class Loading extends Status {
-  const Loading();
-}
-
-class Loaded extends Status {
-  final String data;
-  const Loaded(this.data);
-}
-
-class Failed extends Status {
-  final String error;
-  const Failed(this.error);
-}
-
-void handleStatus(Status status) {
-  switch (status) {
-    case Loading():
-      print('Loading...');
-    case Loaded(:final data):
-      print('Data: $data');
-    case Failed(:final error):
-      print('Error: $error');
-  }
+T myFunc<T>(T value) {
+  return value;
 }
 
 void main() {
-  handleStatus(const Loading());
-  handleStatus(const Loaded("Data berhasil"));
-  handleStatus(const Failed("Gagal"));
+  var a = myFunc(10);
+  var b = myFunc("Hello");
+
+  print(a.runtimeType); // int
+  print(b.runtimeType); // String
 }
     </div>
-    <button class="btn-popup" onclick="openDartPad('e806ed8020b9065b28f2d8069aafa203')">▶ Jalankan Kode di DartPad</button>
+    <button class="btn-popup" onclick="openDartPad('dafb2eb06711bdec400785c7b726af3d')">▶ Jalankan Kode di DartPad</button>
 </div>
 
 <div class="topik-section">
-    <h3 class="topik-judul">🔹 Pembatasan Tipe dan manfaatnya</h3>
+    <h3 class="topik-judul">🔹Pembatasan Tipe dan manfaatnya </h3>
     <div class="topik-penjelasan">
-    Pembatasan tipe adalah aturan dalam penggunaan generic yang membatasi jenis tipe data yang boleh digunakan, biasanya dengan kata kunci seperti `extends`. Dengan adanya pembatasan ini, keamanan tipe data (type safety) lebih terjaga, kesalahan dalam program dapat dikurangi, serta memastikan bahwa tipe data yang digunakan memiliki fungsi atau sifat tertentu. Hal ini juga membuat kode menjadi lebih terkontrol dan mudah dikelola.
-    </div>
+      Pada Dart, pembatasan tipe digunakan untuk memastikan bahwa generic hanya menerima tipe data tertentu yang sesuai.
+    <div class="card">
+<ul>
+<li>Manfaatnya:</li>
+<li>Mencegah kesalahan tipe data (lebih aman).</li>
+<li>Membuat kode lebih jelas dan mudah dibaca.</li>
+<li>emastikan hanya tipe yang sesuai yang bisa digunakan.</li>
+<li>Membantu penulisan kode lebih terstruktur.</li>
+</ul>
+</p>
+</div>
 
 
 <!-- ===== TOPIK 7 : PRODUCT CLASS (KODE AWAL DARI SOAL) ===== -->
@@ -617,111 +628,142 @@ void main() {
     <div class="topik-penjelasan">
     Pembatasan tipe pada interface dan class adalah penggunaan generic dengan batasan tertentu (seperti `extends`) yang diterapkan pada interface atau class agar hanya tipe data tertentu yang dapat digunakan. Dengan pembatasan ini, interface dan class menjadi lebih aman karena hanya menerima tipe yang sesuai, memastikan adanya method atau sifat tertentu, serta membuat kode lebih terstruktur, terkontrol, dan mudah dikelola.
     </div>
-    <!-- CODE DART persis seperti di soal: class Product dan main -->
+    <div class="topik-section">
+    <h3 class="topik-judul">✅ Analisis keberhasilan</h3>
+    <div class="topik-penjelasan">
+   kode berhasil karena semua argumen sesuai dengan batasan Iterable, jadi bisa di-loop tanpa masalah.
+    </div>
+    <!-- CODE DART (pratinjau) -->
     <div class="code-block">
-// Nama  : Nabilah Cahya Suci 
-// NIM   : 251410018
+// Nama : Nabilah cahya suci
+// NIM  : 251410018
 // Kelas : SI2A
 
-sealed class AppState {}
-
-class LoadingState extends AppState {}
-
-class SuccessState extends AppState {
-  final List<String> items;
-  SuccessState(this.items);
-}
-
-class ErrorState extends AppState {
-  final String message;
-  ErrorState(this.message);
-}
-
-void showLoading() {
-  print('Loading...');
-}
-
-void showItems(List<String> items) {
-  print('Success! Items:');
-  for (int i = 0; i < items.length; i++) {
-    print('${i + 1}. ${items[i]}');
-  }
-}
-
-void showError(String message) {
-  print('Error: $message');
-}
-
-void updateUI(AppState state) {
-  switch (state) {
-    case LoadingState():
-      showLoading();
-    case SuccessState(:final items):
-      showItems(items);
-    case ErrorState(:final message):
-      showError(message);
+void printIterable<T extends Iterable<dynamic>>(T data) {
+  for (var item in data) {
+    print(item);
   }
 }
 
 void main() {
-  updateUI(LoadingState());
-  updateUI(SuccessState(["Item 1", "Item 2"]));
-  updateUI(ErrorState("Terjadi error"));
+  printIterable<List<int>>([1, 2, 3]);
+  printIterable<Set<String>>({'Melon', 'Apple'});
 }
-    </div>
-    <button class="btn-popup" onclick="openDartPad('3af8b506c7189190b2584051b91b339d')">▶ Jalankan Kode di DartPad</button>
+   </div>
+    <button class="btn-popup" onclick="openImage('Pembatasan tipe pada interface dan class sukses.jpeg')">
+▶ Lihat Capture
+</button>
 </div>
 
+<div class="topik-section">
+    <h3 class="topik-judul"> ❌ Analisis kegagalan</h3>
+    <div class="topik-penjelasan">
+    Error terjadi karena fungsi mengharapkan data yang bisa di-iterasi (Iterable), tapi kamu memberi int.
+    </div>
+    <!-- CODE DART (pratinjau) -->
+    <div class="code-block">
+// Nama : Nabilah Cahya Suci
+// NIM  : 251410028
+// Kelas : SI2A
+
+void printIterable(dynamic iterable) {
+  for (var item in iterable) {
+    print(item);
+  }
+}
+
+void main() {
+  printIterable(10); // Error saat runtime
+}
+   </div>
+    <button class="btn-popup" onclick="openImage('Pembatasa tipe pada interface class erro.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
 
 <div class="topik-section">
     <h3 class="topik-judul">🔹 Pembatasan Tipe dengan Class Abstract</h3>
     <div class="topik-penjelasan">
     Pembatasan tipe dengan class abstract adalah penggunaan generic dengan batasan `extends` yang mengharuskan tipe data merupakan turunan dari class abstract tertentu. Hal ini memastikan tipe memiliki method atau sifat yang sudah ditentukan, sehingga kode lebih aman, terstruktur, dan tetap fleksibel.
     </div>
+    <div class="topik-section">
+    <h3 class="topik-judul">✅ Analisis keberhasilan</h3>
+    <div class="topik-penjelasan">
+    Kode berhasil berjalan karena tipe data dibatasi dengan benar, sehingga semua objek pasti punya method yang dibutuhkan.
+    </div>
     <!-- CODE DART (pratinjau) -->
     <div class="code-block">
-// Nama  : Nabilah Cahya Suci 
-// NIM   : 251410018
-// Kelas : SI2A 
+// Nama : Nabilah cahya suci
+// NIM  : 251410018
+// Kelas : SI2A
 
-base class BarangRepository {
-  void create(String barang) {
-    print("Tambah barang: $barang");
-  }
+abstract class Animal {
+  void makeSound();
+}
 
-  void read() {
-    print("Menampilkan semua barang...");
-  }
-
-  void update(int id, String barang) {
-    print("Barang ke-$id diubah jadi $barang");
-  }
-
-  void delete(int id) {
-    print("Barang ke-$id dihapus");
+class Dog implements Animal {
+  @override
+  void makeSound() {
+    print('Woof!');
   }
 }
 
-// subclass beda dari temen
-base class Gudang extends BarangRepository {
+class Cat implements Animal {
   @override
-  void read() {
-    print("Daftar barang di gudang:");
+  void makeSound() {
+    print('Meow!');
+  }
+}
+
+class AnimalCage<T extends Animal> {
+  T animal;
+
+  AnimalCage(this.animal);
+
+  void sound() {
+    animal.makeSound();
   }
 }
 
 void main() {
-  print("=== SISTEM GUDANG ===");
+  var dog = AnimalCage<Dog>(Dog());
+  dog.sound();
 
-  Gudang gudang = Gudang();
-
-  gudang.create("Sepatu");
-  gudang.read();
-  gudang.update(1, "Sepatu Baru");
-  gudang.delete(1);
+  var cat = AnimalCage<Cat>(Cat());
+  cat.sound();
 }
+   </div>
+    <button class="btn-popup" onclick="openImage('Pembatasan tipe denngan class abstract sukse.jpeg')">
+▶ Lihat Capture
+</button>
+</div>
+
+<div class="topik-section">
+    <h3 class="topik-judul"> ❌ Analisis kegagalan</h3>
+    <div class="topik-penjelasan">
+    Kode Error karena memakai String pada generic yang hanya menerima turunan Animal.
     </div>
-    <button class="btn-popup" onclick="openImage('bonus1.jpeg')">
+    <!-- CODE DART (pratinjau) -->
+// Nama : Nabilah cahya suci
+// NIM  : 251410018
+// Kelas : SI2A
+
+abstract class Animal {
+  void makeSound();
+}
+
+// Tetap pakai pembatasan tipe
+class AnimalCage<T extends Animal> {
+  T animal;
+
+  AnimalCage(this.animal);
+}
+
+void main() {
+  var stringCage = AnimalCage<String>('test'); // ERROR
+}
+   </div>
+    <button class="btn-popup" onclick="openImage('Pembatasan tipe denngan class abstract erro.jpeg')">
 ▶ Lihat Capture
 </button>
 </div>
@@ -737,33 +779,89 @@ void main() {
 // NIM   : 251410018
 // Kelas : SI2A
 
-final class Hitung {
-  static int tambah(int a, int b) => a + b;
-  static int kurang(int a, int b) => a - b;
-  static int kali(int a, int b) => a * b;
-  static double bagi(double a, double b) => a / b;
+class Repository<T> {
+  final List<T> _items = [];
+
+  // Method save
+  void save(T item) {
+    _items.add(item);
+  }
+
+  // Method getById (pakai index sebagai id sederhana)
+  T? getById(int id) {
+    if (id >= 0 && id < _items.length) {
+      return _items[id];
+    }
+    return null;
+  }
+
+  // Method getAll
+  List<T> getAll() {
+    return _items;
+  }
+}
+
+// Fungsi generic swap
+void swap<T>(List<T> list, int i, int j) {
+  T temp = list[i];
+  list[i] = list[j];
+  list[j] = temp;
+}
+
+// Class Triple
+class Triple<A, B, C> {
+  A first;
+  B second;
+  C third;
+
+  Triple(this.first, this.second, this.third);
 }
 
 void main() {
-  print("=== PROGRAM HITUNG ===");
+  // ===== Repository =====
+  var repo = Repository<String>();
+  repo.save("Data 1");
+  repo.save("Data 2");
 
-  print("Penjumlahan : ${Hitung.tambah(15, 5)}");
-  print("Pengurangan : ${Hitung.kurang(15, 5)}");
-  print("Perkalian   : ${Hitung.kali(15, 5)}");
-  print("Pembagian   : ${Hitung.bagi(15, 5)}");
+  print("Semua data: ${repo.getAll()}");
+  print("Data ke-1: ${repo.getById(0)}");
+
+  // ===== Swap =====
+  List<int> angka = [1, 2, 3, 4];
+  swap(angka, 0, 3);
+  print("Setelah swap: $angka");
+
+  // ===== Triple =====
+  var triple = Triple<String, int, bool>("Hello", 10, true);
+  print("Triple: ${triple.first}, ${triple.second}, ${triple.third}");
 }
+
     </div>
-    <button class="btn-popup" onclick="openImage('bonus2.jpeg')">
-▶ Lihat Capture
-</button>
+    <button class="btn-popup" onclick="openDartPad('1e8c50558399b0c0b06a668d855d5906')">▶ Jalankan Kode di DartPad</button>
 </div>
 
 <div class="topik-section">
-    <h3 class="topik-judul">🔹 Generic vs Dynamic vs Object</h3>
+    <h3 class="topik-judul">🔹Generic vs Dynamic vs Object </h3>
     <div class="topik-penjelasan">
-    Generic, dynamic, dan object merupakan tiga cara dalam menangani tipe data dalam pemrograman. Generic bersifat fleksibel namun tetap aman karena tipe data ditentukan dengan jelas saat digunakan (type-safe). Dynamic memberikan kebebasan tanpa tipe tetap, tetapi berisiko menimbulkan error saat program dijalankan. Sementara itu, object dapat menampung semua jenis data, namun penggunaannya kurang praktis karena memerlukan casting untuk mengakses nilai secara spesifik.
-    </div>
+    <div class="card">
+<ul>
+<li>Manfaatnya:</li>
+<li>Generic, Tipe data sudah ditentukan sejak awal, sehingga lebih aman dan tidak perlu konversi saat digunakan.</li>
+<li>Dynamic, Tipe data bisa berubah-ubah, fleksibel digunakan, tetapi berisiko error saat program berjalan.</li>
+<li>Object, Bisa menyimpan berbagai tipe data, namun perlu penyesuaian tipe (casting) saat digunakan.</li>
+</ul>
+</p>
+</div>
+    <div class="code-block">
+// Contoh perbedaan
+Box box1 = Box(42);   // Generic: aman
+dynamic box2 = 42;   // Dynamic: tidak aman
+Object box3 = 42;   // Object: perlu casting
+   
+</div>
+</div>
 
+   
     <div class="topik-section">
     <h3 class="topik-judul">🔹  Studi Kasus – Cache Generic</h3>
     <div class="topik-penjelasan">
@@ -774,32 +872,38 @@ void main() {
 // NIM   : 251410018
 // Kelas : SI2A
 
-final class Settings {
-  final String theme;
-  final int fontSize;
-  Settings({required this.theme, required this.fontSize});
-  void showSettings() {
-    print("Theme: $theme, Font Size: $fontSize");
+class Cache<T> {
+  final Map<String, T> _storage = {};
+
+  void set(String key, T value) {
+    _storage[key] = value;
+  }
+
+  T? get(String key) {
+    return _storage[key];
+  }
+
+  void remove(String key) {
+    _storage.remove(key);
   }
 }
-class CustomSettings {
-  final Settings settings;
-  CustomSettings(String theme, int fontSize)
-      : settings = Settings(theme: theme, fontSize: fontSize);
-  void showSettings() {
-    settings.showSettings();
-  }
+
+class Product {
+  String name;
+  int price;
+
+  Product(this.name, this.price);
 }
+
 void main() {
-  Settings settings = Settings(theme: "Dark", fontSize: 14);
-  settings.showSettings();
-  CustomSettings custom = CustomSettings("Dark", 14);
-  custom.showSettings();
+  var userCache = Cache<String>();
+  userCache.set('name', 'Alice');
+
+  var productCache = Cache<Product>();
+  productCache.set('p1', Product('Laptop', 1000));
 }
     </div>
-    <button class="btn-popup" onclick="openImage('final class.jpeg')">
-▶ Lihat Capture
-</button>
+    <button class="btn-popup" onclick="openDartPad('1e8c50558399b0c0b06a668d855d5906')">▶ Jalankan Kode di DartPad</button>
 </div>
 
 <div class="topik-section">
@@ -819,65 +923,58 @@ void main() {
 // NIM   : 251410018
 // Kelas : SI2A
 
-final class Settings {
-  final String theme;
-  final int fontSize;
-  Settings({required this.theme, required this.fontSize});
-  void showSettings() {
-    print("Theme: $theme, Font Size: $fontSize");
+class Stack<T> {
+  List<T> data = [];
+
+  void push(T value) {
+    data.add(value);
+  }
+
+  T pop() {
+    return data.removeLast();
+  }
+
+  T peek() {
+    return data.last;
   }
 }
-class CustomSettings {
-  final Settings settings;
-  CustomSettings(String theme, int fontSize)
-      : settings = Settings(theme: theme, fontSize: fontSize);
-  void showSettings() {
-    settings.showSettings();
-  }
+
+List<T> mergeLists<T>(List<T> a, List<T> b) {
+  return a + b;
 }
-void main() {
-  Settings settings = Settings(theme: "Dark", fontSize: 14);
-  settings.showSettings();
-  CustomSettings custom = CustomSettings("Dark", 14);
-  custom.showSettings();
-}
-    </div>
-    <button class="btn-popup" onclick="openImage('final class.jpeg')">
-▶ Lihat Capture
-</button>
-</div>
 
-<div class="topik-section">
-    <h3 class="topik-judul">🔹 Challenge</h3>
-    <div class="topik-penjelasan">
-    Challenge Sistem Repository Generic adalah pembuatan sistem pengelolaan data menggunakan generic agar bisa digunakan untuk berbagai tipe data. Repository ini memiliki fungsi dasar seperti tambah, ambil, ubah, dan hapus data tanpa perlu membuat kode ulang untuk setiap tipe. Dengan generic, sistem menjadi lebih fleksibel, reusable, dan mudah dikelola.
-    </div>
+class Response<T> {
+  T? data;
+  String? error;
 
-    <div class="code-block">
-// Nama  : Nabilah Cahya Suci 
-// NIM   : 251410018
-// Kelas : SI2A
-
-final class Hitung {
-  static int tambah(int a, int b) => a + b;
-  static int kurang(int a, int b) => a - b;
-  static int kali(int a, int b) => a * b;
-  static double bagi(double a, double b) => a / b;
+  Response({this.data, this.error});
 }
 
 void main() {
-  print("=== PROGRAM HITUNG ===");
+  var s = Stack<int>();
+  s.push(1);
+  s.push(2);
+  s.push(3);
 
-  print("Penjumlahan : ${Hitung.tambah(15, 5)}");
-  print("Pengurangan : ${Hitung.kurang(15, 5)}");
-  print("Perkalian   : ${Hitung.kali(15, 5)}");
-  print("Pembagian   : ${Hitung.bagi(15, 5)}");
+  print(s.peek());
+  print(s.pop());
+  print(s.peek());
+
+  var a = [1, 2];
+  var b = [3, 4];
+
+  print(mergeLists(a, b));
+
+  var r1 = Response<String>(data: "ok");
+  var r2 = Response<String>(error: "gagal");
+
+  print(r1.data);
+  print(r2.error);
 }
     </div>
-    <button class="btn-popup" onclick="openImage('bonus2.jpeg')">
-▶ Lihat Capture
-</button>
+    <button class="btn-popup" onclick="openDartPad('9e5be4ffa35ff0d9e496760ad7de734f')">▶ Jalankan Kode di DartPad</button>
 </div>
+
 
 <!-- MODAL UNTUK DARTPAD -->
 <div id="dartpadModal" class="modal">
