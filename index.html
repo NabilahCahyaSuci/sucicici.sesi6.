@@ -330,7 +330,6 @@ void main() {
    </div>
     <button class="btn-popup" onclick="openImage('Solusi dengan generic sukses.jpeg')">
 ▶ Lihat Capture
-</button>
 </div>
 
 <div class="topik-section">
@@ -377,7 +376,9 @@ void main() {
 </ul>
 </p>
 </div>
-    </div>
+    </button>
+  </div>
+</div>
 
 <!-- ===== TOPIK 3 : CONSTRUCTORS ===== -->
 <div class="topik-section">
@@ -452,6 +453,8 @@ void main() {
 }
     </div>
     <button class="btn-popup" onclick="openDartPad('8e7c3d452f5ff44829f42cdbb08a31e4')">▶ Jalankan Kode di DartPad</button>
+</button>
+  </div>
 </div>
 
 <!-- ===== TOPIK 5 : ENCAPSULATION ===== -->
@@ -619,6 +622,8 @@ void main() {
 <li>Membantu penulisan kode lebih terstruktur.</li>
 </ul>
 </p>
+</button>
+  </div>
 </div>
 
 
@@ -652,7 +657,6 @@ void main() {
    </div>
     <button class="btn-popup" onclick="openImage('Pembatasan tipe pada interface dan class sukses.jpeg')">
 ▶ Lihat Capture
-</button>
 </div>
 
 <div class="topik-section">
@@ -739,11 +743,12 @@ void main() {
 </div>
 
 <div class="topik-section">
-    <h3 class="topik-judul"> ❌ Analisis kegagalan</h3>
+    <h3 class="topik-judul">❌ Analisis kegagalan</h3>
     <div class="topik-penjelasan">
-    Kode Error karena memakai String pada generic yang hanya menerima turunan Animal.
+    Error karena memakai String pada generic yang hanya menerima turunan Animal.
     </div>
     <!-- CODE DART (pratinjau) -->
+    <div class="code-block">
 // Nama : Nabilah cahya suci
 // NIM  : 251410018
 // Kelas : SI2A
@@ -767,6 +772,8 @@ void main() {
 ▶ Lihat Capture
 </button>
 </div>
+
+
 
 <div class="topik-section">
     <h3 class="topik-judul">🔹 Praktik 1 – Generic Class & Fungsi</h3>
@@ -841,39 +848,46 @@ void main() {
 </div>
 
 <div class="topik-section">
-    <h3 class="topik-judul">🔹Generic vs Dynamic vs Object </h3>
-    <div class="topik-penjelasan">
+  <h3 class="topik-judul">🔹 Generic vs Dynamic vs Object</h3>
+
+  <div class="topik-penjelasan">
     <div class="card">
-<ul>
-<li>Manfaatnya:</li>
-<li>Generic, Tipe data sudah ditentukan sejak awal, sehingga lebih aman dan tidak perlu konversi saat digunakan.</li>
-<li>Dynamic, Tipe data bisa berubah-ubah, fleksibel digunakan, tetapi berisiko error saat program berjalan.</li>
-<li>Object, Bisa menyimpan berbagai tipe data, namun perlu penyesuaian tipe (casting) saat digunakan.</li>
-</ul>
-</p>
-</div>
+      <ul>
+        <li><b>Generic</b>: Tipe data sudah ditentukan sejak awal, lebih aman.</li>
+        <li><b>Dynamic</b>: Tipe data fleksibel, tapi berisiko error saat runtime.</li>
+        <li><b>Object</b>: Bisa menyimpan semua tipe data, tapi perlu casting.</li>
+      </ul>
+    </div>
+
     <div class="code-block">
+<pre><code>
 // Contoh perbedaan
-Box box1 = Box(42);   // Generic: aman
-dynamic box2 = 42;   // Dynamic: tidak aman
-Object box3 = 42;   // Object: perlu casting
-   
-</div>
+Box&lt;int&gt; box1 = Box&lt;int&gt;(42);   // Generic: aman
+dynamic box2 = 42;              // Dynamic: fleksibel
+Object box3 = 42;               // Object: perlu casting
+</code></pre>
+    </div>
+  </div>
 </div>
 
-   
-    <div class="topik-section">
-    <h3 class="topik-judul">🔹  Studi Kasus – Cache Generic</h3>
-    <div class="topik-penjelasan">
-    Studi Kasus – Cache Generic adalah penggunaan generic untuk membuat cache yang dapat menyimpan berbagai tipe data dalam satu struktur. Dengan cara ini, kode menjadi lebih fleksibel, efisien, dan tetap aman karena tipe data tetap terkontrol.
-    </div>
+<!-- SECTION 2 -->
+<div class="topik-section">
+  <h3 class="topik-judul">🔹 Studi Kasus – Cache Generic</h3>
+
+  <div class="topik-penjelasan">
+    <p>
+      Cache Generic digunakan untuk menyimpan berbagai tipe data dalam satu struktur
+      dengan tetap menjaga keamanan tipe data (type-safe).
+    </p>
+
     <div class="code-block">
+<pre><code>
 // Nama  : Nabilah Cahya Suci 
 // NIM   : 251410018
 // Kelas : SI2A
 
-class Cache<T> {
-  final Map<String, T> _storage = {};
+class Cache&lt;T&gt; {
+  final Map&lt;String, T&gt; _storage = {};
 
   void set(String key, T value) {
     _storage[key] = value;
@@ -896,14 +910,20 @@ class Product {
 }
 
 void main() {
-  var userCache = Cache<String>();
+  var userCache = Cache&lt;String&gt;();
   userCache.set('name', 'Alice');
 
-  var productCache = Cache<Product>();
+  var productCache = Cache&lt;Product&gt;();
   productCache.set('p1', Product('Laptop', 1000));
 }
+</code></pre>
     </div>
-    <button class="btn-popup" onclick="openDartPad('1e8c50558399b0c0b06a668d855d5906')">▶ Jalankan Kode di DartPad</button>
+
+    <button class="btn-popup"
+      onclick="openDartPad('1e8c50558399b0c0b06a668d855d5906')">
+      ▶ Jalankan Kode di DartPad
+    </button>
+  </div>
 </div>
 
 <div class="topik-section">
